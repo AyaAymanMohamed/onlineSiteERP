@@ -1,8 +1,5 @@
-setwd("E:/4th year 2nd term/ERP/Project")
-
-#########################
+setwd("E:/FCi/second term/ERP/processingData")
 # 1- read the file "workflow1.txt" as a table(padat table)
-#########################
 dataTable <- read.table("WorkFlow1.txt", sep="|", header=TRUE)
 
 #########################
@@ -20,6 +17,8 @@ applicantRacefctr=as.factor(dataTable$applicant_race_1)
 apllicantetintfctr = as.factor(dataTable$applicant_ethnicity)
 lienStatusfctr = as.factor(dataTable$lien_status)
 preapproval = as.factor(dataTable$preapproval)
+county = as.factor(dataTable$county_name)
+plot(county)
 plot(loanTypefctr)
 plot(loanPurposefctr)
 plot(actionTypefctr)
@@ -38,26 +37,25 @@ cat("number of people were accepted in the Adams county.= ", nrow(dataTable[data
 #4- we inserted the income and other variables as VARCHAR , where it should be numeric, convert the needed
 #variables to numeric. Make sure that they are numeric using a function.
 #######################
-PropertyType <- as.numeric(dataTable$property_type) 
-class(PropertyType)
 
-preapproval <- as.numeric(dataTable$preapproval) 
-class(preapproval)
+dataTable$applicant_income_ink = as.numeric(as.character(dataTable$applicant_income_ink)) 
+class(dataTable$applicant_income_ink)
 
-State_Code <- as.numeric(dataTable$state_code) 
-class(State_Code)
+dataTable$rate_spread = as.numeric(as.character(dataTable$rate_spread)) 
+class(dataTable$rate_spread)
 
-County_Code <- as.numeric(dataTable$county_code) 
-class(County_Code)
+dataTable$minority_population_pct = as.numeric(as.character(dataTable$minority_population_pct)) 
+class(dataTable$minority_population_pct)
 
-Applicant_Ethnicity <- as.numeric(dataTable$applicant_ethnicity )
-class(Applicant_Ethnicity )
+dataTable$hud_median_family_income = as.numeric(as.character(dataTable$hud_median_family_income))
+class(dataTable$hud_median_family_income )
 
-Applicant_Race_1 <- as.numeric(dataTable$applicant_race_1 )
-class(Applicant_Race_1)
+dataTable$tract_to_msamd_income_pct = as.numeric(as.character(dataTable$tract_to_msamd_income_pct))
+class(dataTable$tract_to_msamd_income_pct)
 
-Lien_Status <- as.numeric(dataTable$lien_status)
-class(Lien_Status)
+dataTable$number_of_owner_occupied_units = as.numeric(as.character(dataTable$number_of_owner_occupied_units))
+class(dataTable$number_of_owner_occupied_units)
+
 
 ###################
 #5-Remove records without income info.
@@ -105,7 +103,7 @@ library(ggplot2)
 ggplot(data=ds) + geom_density(aes(x=loan_amount_ink))
 
 ggplot(data=ds) + geom_density(aes(x=loan_amount_ink, 
-                                          colour=as.factor(loan_purpose)))
+                                   colour=as.factor(loan_purpose)))
 
 #2nd: plot log
 ggplot(data=dataTable) + geom_density(aes(x=loan_amount_ink)) + scale_x_log10()
