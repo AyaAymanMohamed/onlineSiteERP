@@ -9,24 +9,24 @@ dataTable <- read.table("WorkFlow1.txt", sep="|", header=TRUE)
 # since categorical variables enter into statistical models differently than continuous variables, 
 #storing data as factors insures that the modeling functions will treat such data correctly.
 # and to visualize data
-loanTypefctr=as.factor(dataTable$loan_type)
-loanPurposefctr=as.factor(dataTable$loan_purpose)
-actionTypefctr=as.factor(dataTable$action_type)
-applicantSexfctr=as.factor(dataTable$applicant_sex)
-applicantRacefctr=as.factor(dataTable$applicant_race_1)
-apllicantetintfctr = as.factor(dataTable$applicant_ethnicity)
-lienStatusfctr = as.factor(dataTable$lien_status)
-preapproval = as.factor(dataTable$preapproval)
-county = as.factor(dataTable$county_name)
-plot(county)
-plot(loanTypefctr)
-plot(loanPurposefctr)
-plot(actionTypefctr)
-plot(applicantSexfctr)
-plot(applicantRacefctr)
-plot(apllicantetintfctr)
-plot(lienStatusfctr)
-plot(preapproval)
+dataTable$loan_type=as.factor(dataTable$loan_type)
+dataTable$loan_purpose=as.factor(dataTable$loan_purpose)
+dataTable$action_type=as.factor(dataTable$action_type)
+dataTable$applicant_sex=as.factor(dataTable$applicant_sex)
+dataTable$applicant_race_1=as.factor(dataTable$applicant_race_1)
+dataTable$applicant_ethnicity = as.factor(dataTable$applicant_ethnicity)
+dataTable$lien_status = as.factor(dataTable$lien_status)
+dataTable$preapproval = as.factor(dataTable$preapproval)
+dataTable$county_name = as.factor(dataTable$county_name)
+plot(dataTable$county_name)
+plot(dataTable$loan_type)
+plot(dataTable$loan_purpose)
+plot(dataTable$action_type)
+plot(dataTable$applicant_sex)
+plot(dataTable$applicant_race_1)
+plot(dataTable$applicant_ethnicity)
+plot(dataTable$lien_status)
+plot(dataTable$preapproval)
 
 ######################
 # 3-How many people were accepted in the Adams county
@@ -37,6 +37,7 @@ cat("number of people were accepted in the Adams county.= ", nrow(dataTable[data
 #4- we inserted the income and other variables as VARCHAR , where it should be numeric, convert the needed
 #variables to numeric. Make sure that they are numeric using a function.
 #######################
+
 
 dataTable$applicant_income_ink = as.numeric(as.character(dataTable$applicant_income_ink)) 
 class(dataTable$applicant_income_ink)
@@ -60,14 +61,14 @@ class(dataTable$number_of_owner_occupied_units)
 ###################
 #5-Remove records without income info.
 ###################
-dataTable=subset.data.frame(dataTable,!is.na(as.numeric(as.character(dataTable$applicant_income_ink)))==TRUE )
-dataTable=subset.data.frame(dataTable,!is.na(as.numeric(as.character(dataTable$hud_median_family_income)))==TRUE)
+dataTable=subset.data.frame(dataTable,!is.na(dataTable$applicant_income_ink)==TRUE )
+dataTable=subset.data.frame(dataTable,!is.na(dataTable$hud_median_family_income)==TRUE)
 
 ###################
 #6- Remove rows with nulls (NA) in Tract_To_MSAMD_Income_pct, Minority_Population_pct,Tract_To_MSAMD_Income_pct.
 ###################
-dataTable=subset.data.frame(dataTable,!is.na(as.numeric(as.character(dataTable$tract_to_msamd_income_pct)))==TRUE)
-dataTable=subset.data.frame(dataTable,!is.na(as.numeric(as.character(dataTable$minority_population_pct)))==TRUE)
+dataTable=subset.data.frame(dataTable,!is.na(dataTable$tract_to_msamd_income_pct)==TRUE)
+dataTable=subset.data.frame(dataTable,!is.na(dataTable$minority_population_pct)==TRUE)
 
 ##############################################
 #Analysis
@@ -86,7 +87,7 @@ plot(as.factor(dataTable$applicant_sex)) #male is more
 ####################
 #2- relation between  the applicant income and the loan amount
 ####################
-with(dataTable, cor(log(as.numeric(applicant_income_ink)),loan_amount_ink))
+with(dataTable, cor(log(applicant_income_ink),loan_amount_ink))
 #there is a correlation between applicant income and the loan amount
 
 #####################
