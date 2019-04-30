@@ -1,4 +1,4 @@
-setwd("E:/FCi/second term/ERP/processingData")
+setwd("E:/4th year 2nd term/ERP/ERP project/Project")
 # 1- read the file "workflow1.txt" as a table(padat table)
 dataTable <- read.table("WorkFlow1.txt", sep="|", header=TRUE)
 
@@ -77,12 +77,15 @@ dataTable=subset.data.frame(dataTable,!is.na(dataTable$minority_population_pct)=
 ####################
 #1-visualize 5 variables
 ####################
-plot(as.factor(dataTable$applicant_income_ink))  # applicant with low income are more
-plot(as.factor(dataTable$loan_amount_ink)) 
-plot(as.factor(dataTable$hud_median_family_income))
-plot(as.factor(dataTable$number_of_owner_occupied_units)) 
-plot(as.factor(dataTable$tract_to_msamd_income_pct))
+
+
+
 plot(as.factor(dataTable$applicant_sex)) #male is more
+plot(density(dataTable$applicant_income_ink))  # applicant with low income are more
+plot(density(dataTable$loan_amount_ink))
+plot(density(dataTable$hud_median_family_income))
+plot(density(dataTable$tract_to_msamd_income_pct))
+hist(dataTable$number_of_owner_occupied_units)
 
 ####################
 #2- relation between  the applicant income and the loan amount
