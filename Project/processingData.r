@@ -31,7 +31,8 @@ plot(dataTable$preapproval)
 ######################
 # 3-How many people were accepted in the Adams county
 ######################
-cat("number of people were accepted in the Adams county.= ", nrow(dataTable[dataTable$county_name == "Adams", ]))
+AdamsCountyAccepted=subset(dataTable,dataTable$county_name=="Adams" && dataTable$action_type=="Originated") 
+length(AdamsCountyAccepted)
 
 ######################
 #4- we inserted the income and other variables as VARCHAR , where it should be numeric, convert the needed
