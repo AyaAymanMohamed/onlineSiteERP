@@ -1,4 +1,4 @@
-setwd("E:/4th year 2nd term/ERP/ERP project/Project")
+setwd("~/FCI/ERP/onlineSiteERP/Project")
 # 1- read the file "workflow1.txt" as a table(padat table)
 dataTable <- read.table("WorkFlow1.txt", sep="|", header=TRUE)
 
@@ -9,15 +9,16 @@ dataTable <- read.table("WorkFlow1.txt", sep="|", header=TRUE)
 # since categorical variables enter into statistical models differently than continuous variables, 
 #storing data as factors insures that the modeling functions will treat such data correctly.
 # and to visualize data
-dataTable$loan_type=as.factor(dataTable$loan_type)
-dataTable$loan_purpose=as.factor(dataTable$loan_purpose)
-dataTable$action_type=as.factor(dataTable$action_type)
-dataTable$applicant_sex=as.factor(dataTable$applicant_sex)
-dataTable$applicant_race_1=as.factor(dataTable$applicant_race_1)
+dataTable$loan_type = as.factor(dataTable$loan_type)
+dataTable$loan_purpose = as.factor(dataTable$loan_purpose)
+dataTable$action_type = as.factor(dataTable$action_type)
+dataTable$applicant_sex = as.factor(dataTable$applicant_sex)
+dataTable$applicant_race_1 = as.factor(dataTable$applicant_race_1)
 dataTable$applicant_ethnicity = as.factor(dataTable$applicant_ethnicity)
 dataTable$lien_status = as.factor(dataTable$lien_status)
 dataTable$preapproval = as.factor(dataTable$preapproval)
 dataTable$county_name = as.factor(dataTable$county_name)
+
 plot(dataTable$county_name)
 plot(dataTable$loan_type)
 plot(dataTable$loan_purpose)
@@ -27,7 +28,6 @@ plot(dataTable$applicant_race_1)
 plot(dataTable$applicant_ethnicity)
 plot(dataTable$lien_status)
 plot(dataTable$preapproval)
-
 ######################
 # 3-How many people were accepted in the Adams county
 ######################
@@ -133,4 +133,27 @@ ggplot(data=without_improvement_outliers) + geom_density(aes(x=loan_amount_ink))
 
 #comment: Removing home improvement make the dist more normal 
 #with less spikes and as a result makes the experiment cleaner
+ggplot(data=without_home_improvement) + geom_density(aes(x=loan_amount_ink, 
+                                   colour=as.factor(loan_purpose))) + scale_x_log10()
+
+
+
+###############################################
+
+# 5- Look for spikes in the outputs. You may need to develop one model with all the data
+# below that spike and develop a separate model with the data beyond that spike 
+# (You can check this on the loan amount ink variable)
+
+###############################################
+
+
+peak <- which.max(density(log10(without_home_improvement$loan_amount_ink))$y)
+
+data_below_spike <- subset(without_home_improvement, without_home_improvement$loan_amount_ink < peak)
+data_beyond_spike <- subset(without_home_improvement, without_home_improvement$loan_amount_ink >= peak)
+
+ggplot(data=data_below_spike) + geom_density(aes(x=loan_amount_ink)) + scale_x_log10()
+ggplot(data=data_beyond_spike) + geom_density(aes(x=loan_amount_ink)) + scale_x_log10()
+
+
 
